@@ -1,3 +1,4 @@
+/*
 const express = require('express');
 const OpenAI = require('OpenAI');
 const fs = require('node:fs');
@@ -27,4 +28,29 @@ sockserver.on('connection', ws => {
 	ws.onerror = function () {
 		console.log('websocket error');
  	}
+});
+*/
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 3000 });
+
+wss.on('connection', (ws, req) => {
+  console.log('New connection from:', req.socket.remoteAddress);
+
+  ws.on('message', (msg) => {
+    const data = JSON.parse(msg);
+    console.log('Received:', data);
+
+    if (data.type === 'prompt') {
+      const reply = {
+        type: 'text',
+        token: `あなたは「${data.voicePrompt}」と言いましたね。`,
+        last: true,
+      };
+      ws.send(JSON.stringify(reply));
+    }
+  });
+
+  ws.on('close', () => {
+    console.log('Connection closed');
+  });
 });
