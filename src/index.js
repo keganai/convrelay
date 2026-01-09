@@ -1,5 +1,5 @@
 const express = require('express');
-const OpenAI = require('OpenAI');
+const OpenAI = require('openai');
 const fs = require('node:fs');
 const { WebSocketServer } = require('ws');
 
@@ -14,7 +14,7 @@ sockserver.on('connection', ws => {
 		if(MSG.type==='prompt'){
 			console.log("A---" + MSG.voicePrompt);
 			const response = await openai.chat.completions.create({
-	            model: 'chatgpt-4o-latest',
+	            model: 'gpt-5.2',
 	            messages: [{ role: 'system', content: openaiprompt },{ role: 'user', content: MSG.voicePrompt }],
 	   	 	});
 	   	 	const reply = response.choices[0].message.content;
