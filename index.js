@@ -1,6 +1,6 @@
 /*
 const express = require('express');
-const OpenAI = require('OpenAI');
+const OpenAI = require('openai');
 const fs = require('node:fs');
 const { WebSocketServer } = require('ws');
 
